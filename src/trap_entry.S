@@ -1,83 +1,74 @@
-# this is what will be loaded into the stvec CSR; the
-# trap handler address must be 4-byte aligned:
-# https://docs.riscv.org/reference/isa/priv/supervisor.html#12-1-1-2-supervisor-trap-vector-base-address-stvec-register
 .globl trap_entry
 .align 4
 trap_entry:
 
-    # your code here; save registers to the stack
+    addi sp, sp, -256
 
-    addi sp, sp, -128
-
-    sw ra, 0(sp)
-
-    sw t0, 4(sp)
-    sw t1, 8(sp)
-    sw t2, 12(sp)
-    sw t3, 16(sp)
-    sw t4, 20(sp)
-    sw t5, 24(sp)
-    sw t6, 28(sp)
-
-    sw a0, 32(sp)
-    sw a1, 36(sp)
-    sw a2, 40(sp)
-    sw a3, 44(sp)
-    sw a4, 48(sp)
-    sw a5, 52(sp)
-    sw a6, 56(sp)
-    sw a7, 60(sp)
-
-    sw s0, 64(sp)
-    sw s1, 68(sp)
-    sw s2, 72(sp)
-    sw s3, 76(sp)
-    sw s4, 80(sp)
-    sw s5, 84(sp)
-    sw s6, 88(sp)
-    sw s7, 92(sp)
-    sw s8, 96(sp)
-    sw s9, 100(sp)
-    sw s10, 104(sp)
-    sw s11, 108(sp)
-
+    sd ra,   0(sp)
+    sd sp,   8(sp)
+    sd gp,  16(sp)
+    sd tp,  24(sp)
+    sd t0,  32(sp)
+    sd t1,  40(sp)
+    sd t2,  48(sp)
+    sd s0,  56(sp)
+    sd s1,  64(sp)
+    sd a0,  72(sp)
+    sd a1,  80(sp)
+    sd a2,  88(sp)
+    sd a3,  96(sp)
+    sd a4, 104(sp)
+    sd a5, 112(sp)
+    sd a6, 120(sp)
+    sd a7, 128(sp)
+    sd s2, 136(sp)
+    sd s3, 144(sp)
+    sd s4, 152(sp)
+    sd s5, 160(sp)
+    sd s6, 168(sp)
+    sd s7, 176(sp)
+    sd s8, 184(sp)
+    sd s9, 192(sp)
+    sd s10,200(sp)
+    sd s11,208(sp)
+    sd t3, 216(sp)
+    sd t4, 224(sp)
+    sd t5, 232(sp)
+    sd t6, 240(sp)
 
     call handle_trap
 
-    # your code here; restore registers
+    ld ra,   0(sp)
+    ld gp,  16(sp)
+    ld tp,  24(sp)
+    ld t0,  32(sp)
+    ld t1,  40(sp)
+    ld t2,  48(sp)
+    ld s0,  56(sp)
+    ld s1,  64(sp)
+    ld a0,  72(sp)
+    ld a1,  80(sp)
+    ld a2,  88(sp)
+    ld a3,  96(sp)
+    ld a4, 104(sp)
+    ld a5, 112(sp)
+    ld a6, 120(sp)
+    ld a7, 128(sp)
+    ld s2, 136(sp)
+    ld s3, 144(sp)
+    ld s4, 152(sp)
+    ld s5, 160(sp)
+    ld s6, 168(sp)
+    ld s7, 176(sp)
+    ld s8, 184(sp)
+    ld s9, 192(sp)
+    ld s10,200(sp)
+    ld s11,208(sp)
+    ld t3, 216(sp)
+    ld t4, 224(sp)
+    ld t5, 232(sp)
+    ld t6, 240(sp)
 
-    lw ra, 0(sp)
-
-    lw t0, 4(sp)
-    lw t1, 8(sp)
-    lw t2, 12(sp)
-    lw t3, 16(sp)
-    lw t4, 20(sp)
-    lw t5, 24(sp)
-    lw t6, 28(sp)
-
-    lw a0, 32(sp)
-    lw a1, 36(sp)
-    lw a2, 40(sp)
-    lw a3, 44(sp)
-    lw a4, 48(sp)
-    lw a5, 52(sp)
-    lw a6, 56(sp)
-    lw a7, 60(sp)
-
-    lw s0, 64(sp)
-    lw s1, 68(sp)
-    lw s2, 72(sp)
-    lw s3, 76(sp)
-    lw s4, 80(sp)
-    lw s5, 84(sp)
-    lw s6, 88(sp)
-    lw s7, 92(sp)
-    lw s8, 96(sp)
-    lw s9, 100(sp)
-    lw s10, 104(sp)
-    lw s11, 108(sp)
-
-    addi sp, sp, 128
+    addi sp, sp, 256
 
     sret
